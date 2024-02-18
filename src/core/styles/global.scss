@@ -1,0 +1,280 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --loader-width: 48px;
+
+  --defaultColors-odd: #f0f4f7;
+  --defaultColors-even: #e3e8eb;
+  --activeColors-odd: #ffcdb2;
+  --activeColors-even: #aedfff;
+}
+
+body {
+  @apply text-center text-base m-0 bg-gray-100;
+  font-family: "Arial", "Helvetica", sans-serif;
+}
+
+main {
+  @apply text-center h-screen w-screen overflow-auto;
+}
+
+.mainContainer {
+  @apply flex container mx-auto h-full w-full sm:px-5;
+
+  & > * {
+    @apply w-full;
+  }
+
+  .table {
+    @apply flex flex-col flex-1 h-full border-y border-gray-300 overflow-hidden rounded-lg shadow-lg bg-[var(--defaultColors-odd)] border border-slate-100;
+
+    .col {
+      @apply col-span-3 text-start truncate p-3;
+
+      &:first-child {
+        @apply text-start col-span-1;
+      }
+
+      &:nth-child(2) {
+        @apply col-span-1;
+      }
+
+      &:last-child {
+        @apply col-span-1;
+      }
+    }
+
+    &Container {
+      @apply flex flex-col flex-auto sm:max-h-[95vh] sm:m-auto rounded-lg shadow-lg bg-[var(--defaultColors-odd)] border border-slate-100 overflow-auto;
+    }
+
+    &Wrap {
+      @apply h-full sm:h-fit flex overflow-auto;
+    }
+
+    &Headline {
+      @apply flex flex-wrap justify-between gap-3 py-3 px-4 bg-[var(--defaultColors-even)];
+
+      .left {
+        @apply flex flex-wrap gap-3;
+      }
+
+      .right {
+        @apply flex items-end;
+
+        button {
+          @apply whitespace-nowrap;
+        }
+      }
+    }
+
+    &Header {
+      @apply px-2 bg-[#b7bcb5] border-b border-[#49494996] grid grid-cols-12 grid-flow-col;
+
+      .col {
+      }
+    }
+
+    &Body {
+      @apply overflow-auto;
+
+      &Row {
+        @apply grid grid-cols-12 grid-flow-col border-b border-b-[#e7eae796] overflow-hidden cursor-pointer px-2;
+
+        * {
+          @apply cursor-pointer;
+        }
+
+        background: var(--defaultColors-even);
+
+        &:nth-child(odd) {
+          background: var(--defaultColors-odd);
+        }
+
+        &.active {
+          background: var(--activeColors-even);
+
+          &:nth-child(odd) {
+            background: var(--activeColors-odd);
+          }
+        }
+
+        &:hover {
+          @apply opacity-75;
+        }
+
+        .col {
+          &:last-child {
+            @apply border-none;
+          }
+        }
+      }
+    }
+
+    &Footer {
+      @apply h-[52px] flex items-center justify-center gap-4;
+    }
+  }
+}
+
+button {
+  @apply flex items-center justify-center text-base rounded bg-gray-700 text-white transition duration-300 ease-in-out focus:outline-none focus:ring focus:border-blue-300;
+
+  &.icon {
+    @apply border-0 shadow-none p-0 leading-none font-bold;
+  }
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+input,
+select {
+  @apply border rounded outline-0 py-2 text-base;
+  line-height: 20px;
+}
+
+input {
+  @apply px-3;
+  min-width: 115px;
+}
+
+select {
+  @apply pl-2 pr-1;
+  min-width: 50px;
+  max-width: 115px;
+}
+
+.button {
+  @apply border rounded outline-none px-3 py-2 transition shadow-sm;
+
+  &:active {
+    @apply scale-95 shadow-none;
+  }
+}
+
+.fromGroup {
+  @apply flex row-auto items-center justify-start;
+
+  * {
+    color: rgb(17 24 39);
+  }
+
+  label {
+    @apply pr-2 whitespace-nowrap;
+  }
+}
+
+.modal {
+  @apply opacity-0 pointer-events-none absolute top-0 z-40 h-screen w-screen transition-all duration-300 ease-in-out;
+
+  &Backdrop {
+    @apply z-40 h-full w-full cursor-pointer bg-black/60;
+  }
+
+  &Content {
+    @apply flex flex-col flex-1 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md overflow-hidden bg-white shadow transition-all duration-300 ease-in-out;
+    width: 580px;
+    min-width: 40vw;
+    max-width: 90vw;
+    min-height: 40vh;
+    max-height: 90vh;
+
+    &Headline {
+      @apply flex bg-[#b7bcb5] flex-row justify-between items-center px-3 py-2 border-b;
+
+      .title {
+        @apply text-lg font-bold;
+      }
+    }
+
+    &Body {
+      @apply flex flex-1 overflow-auto min-h-full;
+
+      .selectedList {
+        @apply w-full;
+
+        ul {
+          @apply flex flex-col;
+
+          li {
+            @apply flex flex-row justify-start items-center px-3 py-2 gap-2 border-b bg-[var(--defaultColors-even)];
+
+            .removeBtn {
+              @apply border rounded-full border-gray-300 text-gray-300;
+              height: 16px;
+              width: 16px;
+              &:hover {
+                @apply border-red-300 text-red-300 font-bold border-2;
+              }
+            }
+
+            &:nth-child(odd) {
+              background: var(--defaultColors-odd);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.open {
+    @apply opacity-100 pointer-events-auto;
+  }
+}
+
+.state {
+  @apply inline-flex font-normal rounded-xl my-3 mx-auto px-3 py-2;
+
+  &Container {
+    @apply flex p-2 items-center justify-center;
+  }
+}
+
+.warning {
+  @apply state bg-red-400 border h-fit w-fit border-red-500 text-white;
+}
+
+.loader {
+  @apply state flex-col items-center justify-between;
+
+  .lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    div {
+      @apply box-border block absolute m-1 border-4 rounded-full;
+      width: var(--loader-width);
+      height: var(--loader-width);
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: #000 transparent transparent transparent;
+
+      &:nth-child(1) {
+        animation-delay: -0.45s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: -0.3s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: -0.15s;
+      }
+    }
+  }
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
